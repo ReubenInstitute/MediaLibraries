@@ -1,44 +1,43 @@
-import elevenlabs
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
 API_FILE = 'elevenlabs.txt'
 
-def text_to_speech(text, voice_id, output_path):
+def client():
+	# imported here so that importing Services does not require the elevenlabs package
+	from elevenlabs import ElevenLabs
+	from elevenlabs.environment import ElevenLabsEnvironment
 	with open(API_FILE, 'r') as f:
 		api_key = f.read().strip()
-	client = ElevenLabs(api_key=api_key, environment=ElevenLabsEnvironment.PRODUCTION)
-	result = client.text_to_speech.convert(
+	return ElevenLabs(api_key=api_key, environment=ElevenLabsEnvironment.PRODUCTION)
+
+def save(result, output_path):
+	import elevenlabs
+	elevenlabs.save(result, output_path)
+
+def text_to_speech(text, voice_id, output_path):
+	result = client().text_to_speech.convert(
 		text=text,
 		voice_id=voice_id,
 		model_id="eleven_v3",
 		language_code="he",
 		output_format="mp3_44100_128",
 	)
-	elevenlabs.save(result, output_path)
+	save(result, output_path)
 	return True
 
 def speech_to_speech(input_path, voice_id, output_path):
-	with open(API_FILE, 'r') as f:
-		api_key = f.read().strip()
-	client = ElevenLabs(api_key=api_key, environment=ElevenLabsEnvironment.PRODUCTION)
 	with open(input_path, 'rb') as f:
 		audio_data = f.read()
-	result = client.speech_to_speech.convert(
+	result = client().speech_to_speech.convert(
 		voice_id=voice_id,
 		output_format="mp3_44100_128",
 		model_id="eleven_multilingual_sts_v2",
 		audio=audio_data
 	)
-	elevenlabs.save(result, output_path)
+	save(result, output_path)
 	return True
 
 def forced_alignment(audiofile, text):
-	with open(API_FILE, 'r') as f:
-		api_key = f.read().strip()
-	client = ElevenLabs(api_key=api_key, environment=ElevenLabsEnvironment.PRODUCTION)
 	with open(audiofile, 'rb') as audio_file:
-		response = client.forced_alignment.create(
+		response = client().forced_alignment.create(
 			file=audio_file,
 			text=text
 		)
