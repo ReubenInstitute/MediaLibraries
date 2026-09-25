@@ -1,0 +1,13 @@
+Package: python3-mediatools
+Version: 0.1
+Section: python
+Priority: optional
+Architecture: all
+Depends: python3, python3-ffmpeg, python3-mutagen, python3-pil, ffmpeg
+Maintainer: Reuben Institute <reubeninstitute@gmail.com>
+Description: Local media utilities and ElevenLabs API wrapper
+ Provides Media (ffmpeg/mutagen/PIL-based tagging, cover art, scaling,
+ probing) and Services (ElevenLabs API wrapper: TTS, speech-to-speech,
+ forced/word alignment) for Reuben Institute's media pipeline. The
+ elevenlabs package itself is not a hard dependency — Services imports
+ it lazily per function.
