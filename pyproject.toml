@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "MediaTools"
-version = "0.4"
+version = "0.6"
 description = "Local media utilities (tagging, cover art, scaling, probing) and an ElevenLabs API wrapper for Reuben Institute's media pipeline"
 readme = { text = "Local media utilities (tagging, cover art, scaling, probing) and an ElevenLabs API wrapper for Reuben Institute's media pipeline.", content-type = "text/plain" }
 license = "GPL-3.0-or-later"
